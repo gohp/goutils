@@ -21,7 +21,7 @@ func IntToString(i int) string {
 
 // Int64ToString ...
 func Int64ToString(i int64) string {
-	return strconv.FormatInt(i,10)
+	return strconv.FormatInt(i, 10)
 }
 
 //// ToInt64 convert any numeric value to int64
