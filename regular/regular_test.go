@@ -23,3 +23,10 @@ func TestIsMobile(t *testing.T) {
 		So(IsMobile("1350000111"), ShouldBeFalse)
 	})
 }
+
+func TestIsBankNo(t *testing.T) {
+	Convey("test bank no", t, func() {
+		t.Log(IsBankNo("63222"))
+		So(IsBankNo("6222"), ShouldBeFalse)
+	})
+}
