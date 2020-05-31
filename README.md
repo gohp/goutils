@@ -14,3 +14,4 @@ Common, utility packages for Go
 | safemap | [safemap](safemap/safemap.go) |
 | 常规判断 | [regular](regular/regular.go) |
 | HTTP操作 | [http](http/http.go) |
+| hash操作 | [hash](hash/hash.go) |
