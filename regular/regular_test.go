@@ -26,7 +26,7 @@ func TestIsMobile(t *testing.T) {
 
 func TestIsBankNo(t *testing.T) {
 	Convey("test bank no", t, func() {
-		t.Log(IsBankNo("63222"))
+		t.Log(IsBankNo("6228481101100634315"))
 		So(IsBankNo("6222"), ShouldBeFalse)
 	})
 }
