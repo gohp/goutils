@@ -18,3 +18,4 @@ Common, utility packages for Go
 | 阻塞操作 | [choke](choke/choke.go) | 实现阻塞程序 |
 | 错误代码 | [ecode](ecode/ecode.go) | 提取自B站的错误封装 |
 | 获取IP | [curip](curip/curip.go) | 获取内网，外网IP |
+| 时间操作 | [gotime](gotime/gotime.go) | 时间输出等 |
