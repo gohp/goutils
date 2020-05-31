@@ -17,3 +17,4 @@ Common, utility packages for Go
 | hash操作 | [hash](hash/hash.go) | md5, sha1, sha256等哈希算法 |
 | 阻塞操作 | [choke](choke/choke.go) | 实现阻塞程序 |
 | 错误代码 | [ecode](ecode/ecode.go) | 提取自B站的错误封装 |
+| 获取IP | [curip](curip/curip.go) | 获取内网，外网IP |
