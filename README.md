@@ -16,3 +16,4 @@ Common, utility packages for Go
 | HTTP操作 | [http](http/http.go) |
 | hash操作 | [hash](hash/hash.go) |
 | 阻塞操作 | [choke](choke/choke.go) |
+| 错误代码 | [ecode](ecode/ecode.go) |
