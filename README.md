@@ -20,3 +20,4 @@ Common, utility packages for Go
 | 获取IP | [curip](curip/curip.go) | 获取内网，外网IP |
 | 时间操作 | [gotime](gotime/gotime.go) | 时间输出等 |
 | jwt | [jwt](jwt/jwt.go) | jwt编码解码 |
+| 流量限制 | [ratelimit](ratelimit/README.md) | 服务流量限制 |
