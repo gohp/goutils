@@ -10,7 +10,7 @@ type Gotime struct {
 	time.Time
 }
 
-func (g Gotime) MarshalJSON() ([]byte, error){
+func (g Gotime) MarshalJSON() ([]byte, error) {
 	stamp := fmt.Sprintf("\"%s\"", FormatDatetime(g, "YYYY-MM-DD HH:mm:ss"))
 	return []byte(stamp), nil
 }
@@ -60,14 +60,14 @@ func NowUnix() int64 {
 // TodayStart eg: 2018-01-01 00:00:00
 func TodayStart() string {
 	now := time.Now()
-	tm := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0,  time.Local)
+	tm := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.Local)
 	return FormatDatetime(tm, "YYYY-MM-DD HH:mm:ss")
 }
 
 // TodayEnd eg: 2018-01-01 23:59:59
 func TodayEnd() string {
 	now := time.Now()
-	tm := time.Date(now.Year(), now.Month(), now.Day(), 23, 59, 59, 1e9-1,  time.Local)
+	tm := time.Date(now.Year(), now.Month(), now.Day(), 23, 59, 59, 1e9-1, time.Local)
 	return FormatDatetime(tm, "YYYY-MM-DD HH:mm:ss")
 }
 
