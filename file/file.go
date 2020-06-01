@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 )
@@ -44,7 +45,11 @@ func WriteStringsToFile(data []string, fileName string) error {
 	return w.Flush()
 }
 
-func ReadStringsFromFile(filename string) ([]string, error) {
+func ReadByteFromFile(filename string) ([]byte, error) {
+	return ioutil.ReadFile(filename)
+}
+
+func ReadLinesFromFile(filename string) ([]string, error) {
 	var output []string
 
 	fi, err := os.Open(filename)

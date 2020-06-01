@@ -23,8 +23,3 @@ func Choke() {
 		}
 	}
 }
-
-//func main()  {
-//	log.Println("start choke")
-//	Choke()
-//}
