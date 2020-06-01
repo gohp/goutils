@@ -23,3 +23,4 @@ Common, utility packages for Go
 | 流量限制 | [ratelimit](ratelimit/README.md) | 服务流量限制 |
 | 距离计算 | [geo](geo/geo.go) | 计算两个经纬度之前的距离 |
 | 敏感词过滤 | [sensitive](sensitive/sensitive.go) | 过滤敏感词汇 |
+| 行政区域查询 | [area](area/README.md) | 根据行政编码，区号，名称等查询行政区域信息 |
