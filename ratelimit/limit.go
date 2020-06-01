@@ -1,7 +1,6 @@
-package main
+package ratelimit
 
 import (
-	"fmt"
 	"sync"
 	"time"
 )
@@ -11,12 +10,23 @@ type TokenBucket struct {
 	fillInterval time.Duration
 	mu           sync.Mutex
 
-	q int64
-	t time.Time
-	k int64
+	q int64     // Quantity of token each time
+	t time.Time // last operation time
+	k int64     // last operation quantity of token
 }
 
-func (tb *TokenBucket) take(count int64) bool {
+func New(capacity int64, fillInterval time.Duration) *TokenBucket {
+	tb := &TokenBucket{
+		capacity:     capacity,
+		fillInterval: fillInterval,
+		q:            1,
+		t:            time.Now(),
+		k:            0,
+	}
+	return tb
+}
+
+func (tb *TokenBucket) Take(count int64) bool {
 	tb.mu.Lock()
 	defer tb.mu.Unlock()
 
@@ -34,25 +44,9 @@ func (tb *TokenBucket) take(count int64) bool {
 	}
 
 	if tb.k-count >= 0 {
-		tb.k = tb.k-count
+		tb.k = tb.k - count
 		return true
 	}
 
 	return false
-}
-
-func main() {
-	var i = 1
-	var fillInterval = time.Millisecond * 10
-
-	bucket := &TokenBucket{
-		capacity:     int64(i),
-		fillInterval: fillInterval,
-		q:            1,
-		t:            time.Now(),
-		k:            0,
-	}
-
-	takeResult := bucket.take(1)
-	fmt.Println("take result", takeResult)
 }
