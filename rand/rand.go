@@ -28,3 +28,17 @@ func CreateRandomBytes(n int, alphabets ...byte) []byte {
 	}
 	return bytes
 }
+
+// RandInt return random int between [min max]
+func RandInt(min, max int) int {
+	if max == min {
+		return min
+	}
+	if max < min {
+		max, min = min, max
+	}
+
+	r.Seed(time.Now().UnixNano())
+	time.Sleep(time.Nanosecond * 1)
+	return min + r.Intn(max-min)
+}

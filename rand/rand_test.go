@@ -17,3 +17,22 @@ func TestCreateRandomBytes(t *testing.T) {
 		convey.So(s1, convey.ShouldNotEqual, s2)
 	})
 }
+
+func TestRandInt(t *testing.T) {
+	convey.Convey("test RandInt", t, func() {
+		t.Log(RandInt(1, 10))
+		t.Log(RandInt(1, 10))
+		t.Log(RandInt(1, 10))
+		t.Log(RandInt(1, 10))
+		t.Log(RandInt(1, 10))
+		t.Log(RandInt(1, 10))
+		t.Log(RandInt(1, 10))
+		t.Log(RandInt(1, 10))
+		t.Log(RandInt(1, 10))
+		t.Log(RandInt(1, 10))
+
+		convey.So(RandInt(1, 100), convey.ShouldBeBetween, 0, 101)
+		convey.So(RandInt(1, 10), convey.ShouldBeBetween, 0, 11)
+		convey.So(RandInt(13, 10), convey.ShouldBeBetween, 9, 14)
+	})
+}
