@@ -170,35 +170,3 @@ func (z *Zone) GetChildren(obj *Zone) []*Zone {
 	}
 	return nil
 }
-
-//func main() {
-//	// load area file
-//	z := Load("./area.json")
-//	ret := z.GetZoneByCityCode("0755")
-//
-//	if ret != nil {
-//		fmt.Printf("city code:0755 get zone: %s\n", ret.GetName())
-//	}
-//
-//	ret2 := z.GetZoneByAdCode("440306")
-//	if ret2 != nil {
-//		fmt.Printf("adcode: 440306 get zone: %s\n", ret2.GetName())
-//	}
-//
-//	ret3 := z.GetFather(ret2)
-//	if ret3 != nil {
-//		fmt.Printf("zone %s get father: %s\n", ret2.GetName(), ret3.GetName())
-//	}
-//
-//	ret4 := z.GetChildren(ret)
-//	if ret4 != nil {
-//		fmt.Printf("%s get children %d\n", ret.GetName(), len(ret4))
-//		for _, k := range ret4 {
-//			if k != nil {
-//				lat, lon := k.GetLocation()
-//				fmt.Printf("get %s's children: %s location [lat:%s lon:%s]\n", ret.GetName(), k.GetName(), lat, lon )
-//			}
-//		}
-//
-//	}
-//}
