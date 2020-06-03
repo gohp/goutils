@@ -3,7 +3,7 @@ package regular
 import (
 	"encoding/json"
 	"fmt"
-	"goutils/http"
+	"github.com/wzyonggege/goutils/http"
 	"regexp"
 )
 

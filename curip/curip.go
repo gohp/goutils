@@ -3,7 +3,7 @@ package curip
 import (
 	"bytes"
 	"fmt"
-	"goutils/http"
+	"github.com/wzyonggege/goutils/http"
 	"log"
 	"net"
 	"os/exec"
