@@ -24,3 +24,4 @@ Common, utility packages for Go
 | 距离计算 | [geo](geo/geo.go) | 计算两个经纬度之前的距离 |
 | 敏感词过滤 | [sensitive](sensitive/sensitive.go) | 过滤敏感词汇 |
 | 行政区域查询 | [area](area/README.md) | 根据行政编码，区号，名称等查询行政区域信息 |
+| websocket | [websocket](ws/README.md) | 基于gorilla/websocket的服务端，客户端 |
