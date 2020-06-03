@@ -1,5 +1,10 @@
 package server
 
+/**
+* @Author: Jam Wong
+* @Date: 2020/6/3 12:32 下午
+ */
+
 import (
 	"errors"
 	"github.com/gorilla/websocket"
