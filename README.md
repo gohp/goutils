@@ -25,3 +25,29 @@ Common, utility packages for Go
 | 敏感词过滤 | [sensitive](sensitive/sensitive.go) | 过滤敏感词汇 |
 | 行政区域查询 | [area](area/README.md) | 根据行政编码，区号，名称等查询行政区域信息 |
 | websocket | [websocket](ws/README.md) | 基于gorilla/websocket的服务端，客户端 |
+
+## Usage
+
+install 
+
+```shell script
+go get -u github.com/wzyonggege/goutils
+```
+
+1. 程序阻塞
+
+```go
+func main() {
+    log.Print("hello world.")
+	choke.Choke() 
+}
+```
+
+2. 随机生成
+
+```go
+func main() {
+    number := rand.RandInt(10, 20)
+    // ...
+}
+```
