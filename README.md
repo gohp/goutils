@@ -12,6 +12,7 @@ Common, utility packages for Go
 | 随机生成 | [rand](rand/rand.go) | 生成随机字符串, 随机数字 |
 | 切片操作 | [slice](slice/slice.go) | slice 一些操作 |
 | safemap | [safemap](safemap/safemap.go) | 线程安全的map |
+| 集合 | [set](set/README.md) | 实现集合及其操作 |
 | 常规判断 | [regular](regular/regular.go) | 银行卡，手机，邮箱判断 |
 | HTTP操作 | [http](http/http.go) | http get 快捷操作 |
 | hash操作 | [hash](hash/hash.go) | md5, sha1, sha256等哈希算法 |
