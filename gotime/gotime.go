@@ -6,30 +6,38 @@ import (
 	"time"
 )
 
-type Gotime struct {
-	time.Time
-}
+const (
+	RFC3339 = "YYYY-MM-DDTHH:mm:ss+08:00"
+	TT      = "YYYY-MM-DD HH:mm:ss"
+	Y_M_D   = "YYYY-MM-DD"
+	YMD     = "YYYYMMDD"
+	HMS     = "HH:mm:ss"
+)
 
-func (g Gotime) MarshalJSON() ([]byte, error) {
-	stamp := fmt.Sprintf("\"%s\"", FormatDatetime(g, "YYYY-MM-DD HH:mm:ss"))
+type Time time.Time
+
+func (g Time) MarshalJSON() ([]byte, error) {
+	// 判空
+	if time.Time(g).UnixNano() == (time.Time{}).UnixNano() {
+		return []byte(""), nil
+	}
+	stamp := fmt.Sprintf("\"%s\"", g.FormatX(TT))
 	return []byte(stamp), nil
 }
 
-// Format time.Time struct to string
-// MM - month - 01
-// M - month - 1, single bit
-// DD - day - 02
-// D - day 2
-// YYYY - year - 2006
-// YY - year - 06
-// HH - 24 hours - 03
-// H - 24 hours - 3
-// hh - 12 hours - 03
-// h - 12 hours - 3
-// mm - minute - 04
-// m - minute - 4
-// ss - second - 05
-// s - second = 5
+func (g *Time) UnmarshalJSON(input []byte) error {
+	if string(input) == "" {
+		*g = Time{}
+		return nil
+	}
+	tt, err := time.ParseInLocation(`"`+"2006-01-02 15:04:05"+`"`, string(input), time.Local)
+	*g = Time(tt)
+	return err
+}
+
+func (g Time) FormatX(format string) string {
+	return FormatDatetime(time.Time(g), format)
+}
 
 func FormatDatetime(t time.Time, format string) string {
 	res := strings.Replace(format, "MM", t.Format("01"), -1)
