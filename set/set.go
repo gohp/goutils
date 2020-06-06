@@ -16,7 +16,7 @@ type Set struct {
 	m    map[interface{}]struct{}
 }
 
-func New() *Set {
+func NewSet() *Set {
 	return &Set{
 		lock: new(sync.RWMutex),
 		m:    make(map[interface{}]struct{}),
@@ -34,6 +34,18 @@ func (s *Set) Add(val interface{}) bool {
 	}
 
 	s.m[val] = struct{}{}
+	return true
+}
+
+func (s *Set) Equal(ss *Set) bool {
+	if s.Len() != ss.Len() {
+		return false
+	}
+	for val := range s.m {
+		if !ss.Contains(val) {
+			return false
+		}
+	}
 	return true
 }
 
@@ -74,7 +86,7 @@ func (s *Set) Len() int {
 
 // Union 并集
 func (s *Set) Union(set *Set) *Set {
-	ret := New()
+	ret := NewSet()
 
 	s.lock.RLock()
 	defer s.lock.RUnlock()
@@ -93,7 +105,7 @@ func (s *Set) Union(set *Set) *Set {
 
 // Intersect 交集
 func (s *Set) Intersect(set *Set) *Set {
-	ret := New()
+	ret := NewSet()
 
 	s.lock.RLock()
 	defer s.lock.RUnlock()
@@ -110,7 +122,7 @@ func (s *Set) Intersect(set *Set) *Set {
 
 // Difference 差集
 func (s *Set) Difference(set *Set) *Set {
-	ret := New()
+	ret := NewSet()
 
 	s.lock.RLock()
 	defer s.lock.RUnlock()
@@ -128,9 +140,23 @@ func (s *Set) Difference(set *Set) *Set {
 // String
 func (s *Set) ToString() string {
 	items := make([]string, 0, s.Len())
+	s.lock.RLock()
+	defer s.lock.RUnlock()
 
 	for val := range s.m {
 		items = append(items, fmt.Sprintf("%v", val))
 	}
 	return fmt.Sprintf("Set{ %s }", strings.Join(items, ", "))
+}
+
+// String
+func (s *Set) ToSlice() []interface{} {
+	items := make([]interface{}, 0, s.Len())
+	s.lock.RLock()
+	defer s.lock.RUnlock()
+
+	for val := range s.m {
+		items = append(items, val)
+	}
+	return items
 }
