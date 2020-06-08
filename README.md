@@ -8,7 +8,7 @@ Common, utility packages for Go
 | usage | package | remark |
 | :--- | :--- | :--- |
 | 类型转换 | [convert](convert/convert.go) | 常用类型转换 |
-| 颜色 | [color](color/color.go) | 多种颜色输出 |
+| 颜色 | [color](color/README.md) | 多种颜色输出 |
 | 文件操作 | [file](file/file.go) | 文件路径，判断，读写等 |
 | 随机生成 | [rand](rand/rand.go) | 生成随机字符串, 随机数字 |
 | 切片操作 | [slice](slice/slice.go) | slice 一些操作 |
