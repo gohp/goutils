@@ -11,7 +11,7 @@ import (
 // init normal ecode
 var (
 	OK        = add(0, "success") // ok
-	ServerErr = New(10001, "server error")
+	ServerErr = New(10000, "server error")
 )
 
 var (
