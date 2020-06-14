@@ -21,7 +21,7 @@ func (g Time) MarshalJSON() ([]byte, error) {
 	if time.Time(g).UnixNano() == (time.Time{}).UnixNano() {
 		return []byte(""), nil
 	}
-	stamp := fmt.Sprintf("\"%s\"", g.FormatX(TT))
+	stamp := fmt.Sprintf("\"%s\"", g.Format(TT))
 	return []byte(stamp), nil
 }
 
@@ -35,7 +35,11 @@ func (g *Time) UnmarshalJSON(input []byte) error {
 	return err
 }
 
-func (g Time) FormatX(format string) string {
+func (g Time) Time() time.Time {
+	return time.Time(g)
+}
+
+func (g Time) Format(format string) string {
 	return FormatDatetime(time.Time(g), format)
 }
 
