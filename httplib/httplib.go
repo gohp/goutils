@@ -35,13 +35,6 @@ func Post(url string) *HttpRequest {
 	return &HttpRequest{url, &req, map[string]string{}, 60 * time.Second, 60 * time.Second, nil, nil, nil}
 }
 
-func Delete(url string) *HttpRequest {
-	var req http.Request
-	req.Method = "DELETE"
-	req.Header = http.Header{}
-	return &HttpRequest{url, &req, map[string]string{}, 60 * time.Second, 60 * time.Second, nil, nil, nil}
-}
-
 // HttpRequest provides more useful methods for requesting one url than http.Request.
 type HttpRequest struct {
 	url              string
@@ -167,16 +160,19 @@ func (b *HttpRequest) getResponse() (*http.Response, error) {
 		b.Body(paramBody)
 	}
 
-	url, err := url.Parse(b.url)
-	if url.Scheme == "" {
-		b.url = "http://" + b.url
-		url, err = url.Parse(b.url)
-	}
+	turl, err := url.Parse(b.url)
 	if err != nil {
 		return nil, err
 	}
+	if turl.Scheme == "" {
+		b.url = "http://" + b.url
+		turl, err = url.Parse(b.url)
+		if err != nil {
+			return nil, err
+		}
+	}
 
-	b.req.URL = url
+	b.req.URL = turl
 	trans := b.transport
 
 	if trans == nil {
@@ -305,7 +301,7 @@ func TimeoutDialer(cTimeout time.Duration, rwTimeout time.Duration) func(net, ad
 		if err != nil {
 			return nil, err
 		}
-		conn.SetDeadline(time.Now().Add(rwTimeout))
+		_ = conn.SetDeadline(time.Now().Add(rwTimeout))
 		return conn, nil
 	}
 }
