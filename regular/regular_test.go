@@ -24,6 +24,18 @@ func TestIsMobile(t *testing.T) {
 	})
 }
 
+func TestIsIpv4Addr(t *testing.T) {
+	Convey("Test is ipv4", t, func() {
+		So(IsIpv4Addr("11.11.11.1"), ShouldBeTrue)
+		So(IsIpv4Addr("1.1.1.1"), ShouldBeTrue)
+		So(IsIpv4Addr("255.255.255.0"), ShouldBeTrue)
+		So(IsIpv4Addr("255.255.255.255"), ShouldBeTrue)
+		So(IsIpv4Addr("255,255.255.255"), ShouldBeFalse)
+		So(IsIpv4Addr("255.255.255.256"), ShouldBeFalse)
+		So(IsIpv4Addr("1.1.1.1.1"), ShouldBeFalse)
+	})
+}
+
 func TestIsBankNo(t *testing.T) {
 	Convey("test bank no", t, func() {
 		t.Log(IsBankNo("6228481101100634315"))

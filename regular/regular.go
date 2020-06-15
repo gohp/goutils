@@ -7,12 +7,18 @@ import (
 	"regexp"
 )
 
-var emailRegexp = regexp.MustCompile(
-	"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
-)
+var (
+	emailRegexp = regexp.MustCompile(
+		"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
+	)
 
-var mobileRegexp = regexp.MustCompile(
-	`^(?:\+?86)?1(?:3\d{3}|5[^4\D]\d{2}|8\d{3}|7(?:[01356789]\d{2}|4(?:0\d|1[0-2]|9\d))|9[189]\d{2}|6[567]\d{2}|4[579]\d{2})\d{6}$`,
+	mobileRegexp = regexp.MustCompile(
+		`^(?:\+?86)?1(?:3\d{3}|5[^4\D]\d{2}|8\d{3}|7(?:[01356789]\d{2}|4(?:0\d|1[0-2]|9\d))|9[189]\d{2}|6[567]\d{2}|4[579]\d{2})\d{6}$`,
+	)
+
+	ipv4Regexp = regexp.MustCompile(
+		`^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$`,
+	)
 )
 
 // IsEmail ...
@@ -23,6 +29,11 @@ func IsEmail(v string) bool {
 // IsMobile ...
 func IsMobile(v string) bool {
 	return mobileRegexp.MatchString(v)
+}
+
+// IsIpv4Addr...
+func IsIpv4Addr(v string) bool {
+	return ipv4Regexp.MatchString(v)
 }
 
 // IsBankNo ... from alipay
