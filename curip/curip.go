@@ -3,7 +3,7 @@ package curip
 import (
 	"bytes"
 	"fmt"
-	"github.com/wzyonggege/goutils/http"
+	"github.com/wzyonggege/goutils/httplib"
 	"log"
 	"net"
 	"os/exec"
@@ -13,8 +13,10 @@ import (
 
 // GetExternalIP timeout
 func GetExternalIP() (string, error) {
-	result, err := http.HttpGet("http://myexternalip.com/raw")
-	return string(result), err
+	result, err := httplib.Get("https://api.ip.sb/ip").String()
+	result = strings.Replace(result, "\n", "", -1)
+	result = strings.Replace(result, " ", "", -1)
+	return result, err
 }
 
 func LocalIP() (string, error) {
