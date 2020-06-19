@@ -19,7 +19,7 @@ Common, utility packages for Go
 | hash操作 | [hash](hash/hash.go) | md5, sha1, sha256等哈希算法 |
 | 阻塞操作 | [choke](choke/choke.go) | 实现阻塞程序 |
 | 错误代码 | [ecode](ecode/ecode.go) | 提取自B站的错误封装 |
-| 获取IP | [curip](curip/curip.go) | 获取内网，外网IP |
+| 获取IP | [curip](curip/README.md) | 获取内网，外网IP |
 | 时间操作 | [gotime](gotime/README.md) | 时间输出, json格式化等 |
 | jwt | [jwt](jwt/jwt.go) | jwt编码解码 |
 | 流量限制 | [ratelimit](ratelimit/README.md) | 服务流量限制 |
