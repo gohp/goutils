@@ -1,9 +1,8 @@
 package regular
 
 import (
-	"encoding/json"
 	"fmt"
-	"github.com/wzyonggege/goutils/http"
+	"github.com/wzyonggege/goutils/httplib"
 	"regexp"
 )
 
@@ -20,6 +19,15 @@ var (
 		`^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$`,
 	)
 )
+
+type ValidateBankCard struct {
+	CardType  string        `json:"cardType"`
+	Bank      string        `json:"bank"`
+	Key       string        `json:"key"`
+	Messages  []interface{} `json:"messages"`
+	Validated bool          `json:"validated"`
+	Stat      string        `json:"stat"`
+}
 
 // IsEmail ...
 func IsEmail(v string) bool {
@@ -38,22 +46,11 @@ func IsIpv4Addr(v string) bool {
 
 // IsBankNo ... from alipay
 func IsBankNo(bankCard string) (b bool) {
-	type ValidateBankCard struct {
-		CardType  string        `json:"cardType"`
-		Bank      string        `json:"bank"`
-		Key       string        `json:"key"`
-		Messages  []interface{} `json:"messages"`
-		Validated bool          `json:"validated"`
-		Stat      string        `json:"stat"`
-	}
 	url := "https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?_input_charset=utf-8&cardNo=%s&cardBinCheck=true"
 	url = fmt.Sprintf(url, bankCard)
-	resp, err := http.HttpGet(url)
-	if err != nil {
-		return
-	}
 	result := ValidateBankCard{}
-	err = json.Unmarshal(resp, &result)
+
+	err := httplib.Get(url).ToJson(&result)
 	if err != nil {
 		return
 	}
