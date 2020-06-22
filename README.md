@@ -14,6 +14,7 @@ Common, utility packages for Go
 | 切片操作 | [slice](slice/slice.go) | slice 一些操作 |
 | safemap | [safemap](safemap/safemap.go) | 线程安全的map |
 | 集合 | [set](set/README.md) | 实现集合及其操作 |
+| 排序 | [sort](sort/README.md) | 常见排序算法 |
 | 常规判断 | [regular](regular/regular.go) | 银行卡，手机，邮箱判断 |
 | HTTP操作 | [httplib](httplib/httplib.go) | http get 快捷操作 |
 | hash操作 | [hash](hash/hash.go) | md5, sha1, sha256等哈希算法 |
@@ -34,22 +35,4 @@ install
 
 ```shell script
 go get -u github.com/wzyonggege/goutils
-```
-
-1. 程序阻塞
-
-```go
-func main() {
-    log.Print("hello world.")
-	choke.Choke() 
-}
-```
-
-2. 随机生成
-
-```go
-func main() {
-    number := rand.RandInt(10, 20)
-    // ...
-}
 ```
