@@ -6,28 +6,46 @@ package sort
  */
 
 // 冒泡排序
-func Bubble()  {
-
+func BubbleSort(input []int) []int {
+	for i := 0; i < len(input)-1; i++ {
+		for j := 0; j < len(input)-1-i; j++ {
+			if input[j] > input[j+1] {
+				input[j], input[j+1] = input[j+1], input[j]
+			}
+		}
+	}
+	return input
 }
 
 // 选择排序
-func Select()  {
+func SelectSort(input []int) []int {
+	for i := 0; i < len(input)-1; i++ {
+		minIndex := i
 
+		for j := i + 1; j < len(input); j++ {
+			if input[j] < input[minIndex] {
+				minIndex = j
+			}
+		}
+
+		input[minIndex], input[i] = input[i], input[minIndex]
+	}
+	return input
 }
 
 // 插入排序
-func Insert()  {
-
+func InsertSort(input []int) []int {
+	return input
 }
 
 // 归并排序
-func Merge()  {
-
+func MergingSort(input []int) []int {
+	return input
 }
 
 // 快速排序
-func Quick()  {
-
+func QuickSort(input []int) []int {
+	return input
 }
 
 // 堆排序
