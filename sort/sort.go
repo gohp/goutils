@@ -35,6 +35,13 @@ func SelectSort(input []int) []int {
 
 // 插入排序
 func InsertSort(input []int) []int {
+	for i := 1; i < len(input)-1; i++ {
+		for j := i; j > 0; j-- {
+			if input[j] < input[j-1] {
+				input[j-1], input[j] = input[j], input[j-1]
+			}
+		}
+	}
 	return input
 }
 
@@ -45,7 +52,25 @@ func MergingSort(input []int) []int {
 
 // 快速排序
 func QuickSort(input []int) []int {
-	return input
+	if len(input) <= 1 {
+		return input
+	}
+	var (
+		left, right []int
+	)
+	mid := input[0]
+	for i := 1; i < len(input); i++ {
+		if input[i] > mid {
+			right = append(right, input[i])
+		} else {
+			left = append(left, input[i])
+		}
+	}
+
+	left = QuickSort(left)
+	right = QuickSort(right)
+
+	return append(append(left, mid), right...)
 }
 
 // 堆排序

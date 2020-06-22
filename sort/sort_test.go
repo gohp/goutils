@@ -25,6 +25,18 @@ func TestSelectSort(t *testing.T) {
 	})
 }
 
+func TestInsertSort(t *testing.T) {
+	Convey("Test Insert Sort", t, func() {
+		So(InsertSort(randomList), ShouldResemble, expectList)
+	})
+}
+
+func TestQuickSort(t *testing.T) {
+	Convey("Test Quick Sort", t, func() {
+		So(QuickSort(randomList), ShouldResemble, expectList)
+	})
+}
+
 func BenchmarkBubbleSort(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		BubbleSort(randomList)
@@ -34,5 +46,17 @@ func BenchmarkBubbleSort(b *testing.B) {
 func BenchmarkSelectSort(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		SelectSort(randomList)
+	}
+}
+
+func BenchmarkInsertSort(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		InsertSort(randomList)
+	}
+}
+
+func BenchmarkQuickSort(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		QuickSort(randomList)
 	}
 }
