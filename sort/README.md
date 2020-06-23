@@ -14,6 +14,19 @@
 
 ---
 
+## Performance
+
+```shell script
+goos: darwin
+goarch: amd64
+pkg: github.com/wzyonggege/goutils/sort
+BenchmarkBubbleSort-8           23888367                48.9 ns/op
+BenchmarkSelectSort-8           18928772                61.5 ns/op
+BenchmarkInsertSort-8           43033284                27.8 ns/op
+BenchmarkQuickSort-8              774042              1642 ns/op
+PASS
+```
+
 
 ## 冒泡排序
 
