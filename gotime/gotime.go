@@ -19,7 +19,7 @@ type Time time.Time
 func (g Time) MarshalJSON() ([]byte, error) {
 	// 判空
 	if time.Time(g).UnixNano() == (time.Time{}).UnixNano() {
-		return []byte(""), nil
+		return []byte("\"\""), nil
 	}
 	stamp := fmt.Sprintf("\"%s\"", g.Format(TT))
 	return []byte(stamp), nil
