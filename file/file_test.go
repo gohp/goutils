@@ -19,8 +19,8 @@ func TestSelfDir(t *testing.T) {
 
 func TestFileExists(t *testing.T) {
 	convey.Convey("test file exist", t, func() {
-		convey.So(FileExists("./file.go"), convey.ShouldBeTrue)
-		convey.So(FileExists("./not_exist_file.go"), convey.ShouldBeFalse)
+		convey.So(IsExists("./file.go"), convey.ShouldBeTrue)
+		convey.So(IsExists("./not_exist_file.go"), convey.ShouldBeFalse)
 	})
 }
 

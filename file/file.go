@@ -21,13 +21,9 @@ func SelfDir() string {
 }
 
 // FileExists reports whether the named file or directory exists.
-func FileExists(name string) bool {
-	if _, err := os.Stat(name); err != nil {
-		if os.IsNotExist(err) {
-			return false
-		}
-	}
-	return true
+func IsExists(name string) bool {
+	_, err := os.Stat(name)
+	return err == nil || os.IsExist(err)
 }
 
 func WriteStringsToFile(data []string, fileName string) error {
