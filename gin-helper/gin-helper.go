@@ -5,10 +5,6 @@ import (
 	"net/http"
 )
 
-/**
-* @Author: Jam Wong
-* @Date: 2020/6/7
- */
 
 type ErrResponse struct {
 	Success bool   `json:"success"`
