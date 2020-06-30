@@ -24,3 +24,31 @@ func TestIsContainsInterface(t *testing.T) {
 		So(IsContainsInterface(a, c), ShouldBeFalse)
 	})
 }
+
+func TestDeleteValueByIndex(t *testing.T) {
+	Convey("Test DeleteValueByIndex", t, func() {
+		a := []interface{}{"111", "222", 1, 34}
+		t.Log(DeleteValueByIndex(a, 3))
+		//So(DeleteValueByIndex(a, 1), ShouldEqual, []interface{}{"111", 1, 34})
+		//So(DeleteValueByIndex(a, 0), ShouldEqual, []interface{}{"222", 1, 34})
+	})
+}
+
+func BenchmarkDeleteValueByIndex(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		a := []interface{}{"1", "2", "3", "4", "1", "2", "3", "4", "1", "2", "3", "4", "1", "2", "3", "4"}
+		DeleteValueByIndex(a, 2)
+	}
+}
+
+func BenchmarkDeleteValue(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		a := []interface{}{"1", "2", "3", "4", "1", "2", "3", "4", "1", "2", "3", "4", "1", "2", "3", "4"}
+		ret := make([]interface{}, 0)
+		for idx, val := range a {
+			if idx != 2 {
+				ret = append(ret, val)
+			}
+		}
+	}
+}
