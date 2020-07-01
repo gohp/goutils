@@ -15,7 +15,7 @@ Common, utility packages for Go
 | safemap | [safemap](safemap/safemap.go) | 线程安全的map |
 | 集合 | [set](set/README.md) | 实现集合及其操作 |
 | 排序 | [sort](sort/README.md) | 常见排序算法 |
-| 常规判断 | [regular](regular/regular.go) | 银行卡，手机，邮箱判断 |
+| 常规判断 | [regular](regular/regular.go) | 银行卡，手机，邮箱，IP地址判断 |
 | HTTP操作 | [httplib](httplib/httplib.go) | http get 快捷操作 |
 | hash操作 | [hash](hash/hash.go) | md5, sha1, sha256等哈希算法 |
 | 阻塞操作 | [choke](choke/choke.go) | 实现阻塞程序 |
