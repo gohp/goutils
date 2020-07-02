@@ -47,7 +47,30 @@ func InsertSort(input []int) []int {
 
 // 归并排序
 func MergingSort(input []int) []int {
-	return input
+	if len(input) < 2 {
+		return input
+	}
+	middle := len(input) / 2
+	left := MergingSort(input[:middle])
+	right := MergingSort(input[middle:])
+	return merge(left, right)
+}
+
+func merge(a, b []int) []int {
+	var result []int
+	i, j := 0, 0
+	for i < len(a) && j < len(b) {
+		if a[i] <= b[j] {
+			result = append(result, a[i])
+			i++
+		} else {
+			result = append(result, b[j])
+			j++
+		}
+	}
+	result = append(result, a[i:]...)
+	result = append(result, b[j:]...)
+	return result
 }
 
 // 快速排序

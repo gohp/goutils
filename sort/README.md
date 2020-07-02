@@ -20,10 +20,11 @@
 goos: darwin
 goarch: amd64
 pkg: github.com/wzyonggege/goutils/sort
-BenchmarkBubbleSort-8           23888367                48.9 ns/op
-BenchmarkSelectSort-8           18928772                61.5 ns/op
-BenchmarkInsertSort-8           43033284                27.8 ns/op
-BenchmarkQuickSort-8              774042              1642 ns/op
+BenchmarkBubbleSort-8           26885558                41.3 ns/op
+BenchmarkSelectSort-8           20463637                55.8 ns/op
+BenchmarkInsertSort-8           44665794                25.5 ns/op
+BenchmarkQuickSort-8              688443              1553 ns/op
+BenchmarkMergingSort-8           1522194               782 ns/op
 PASS
 ```
 

@@ -37,6 +37,12 @@ func TestQuickSort(t *testing.T) {
 	})
 }
 
+func TestMergingSort(t *testing.T) {
+	Convey("Test Merging Sort", t, func() {
+		So(MergingSort(randomList), ShouldResemble, expectList)
+	})
+}
+
 func BenchmarkBubbleSort(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		BubbleSort(randomList)
@@ -58,5 +64,11 @@ func BenchmarkInsertSort(b *testing.B) {
 func BenchmarkQuickSort(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		QuickSort(randomList)
+	}
+}
+
+func BenchmarkMergingSort(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		MergingSort(randomList)
 	}
 }
