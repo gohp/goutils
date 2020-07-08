@@ -107,6 +107,7 @@ func (b *HttpRequest) SetTransport(transport http.RoundTripper) *HttpRequest {
 // 		u, _ := url.ParseRequestURI("http://127.0.0.1:8118")
 // 		return u, nil
 // 	}
+// or Socks5 Proxy "socks5://127.0.0.1:6153"
 func (b *HttpRequest) SetProxy(proxy func(*http.Request) (*url.URL, error)) *HttpRequest {
 	b.proxy = proxy
 	return b
