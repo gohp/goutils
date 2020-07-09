@@ -33,3 +33,19 @@ func WriteError(c *gin.Context, errCode int, errMsg string) {
 		Message: errMsg,
 	})
 }
+
+func PageNotFound(c *gin.Context)  {
+	c.JSON(http.StatusNotFound, gin.H{
+		"status" : http.StatusNotFound,
+		"error": "page not found",
+	})
+	return
+}
+
+func MethodNotFound(c *gin.Context)  {
+	c.JSON(http.StatusMethodNotAllowed, gin.H{
+		"status" : http.StatusMethodNotAllowed,
+		"error": "method not allowed",
+	})
+	return
+}
