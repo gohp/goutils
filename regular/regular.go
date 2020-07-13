@@ -65,9 +65,15 @@ func IsBankNo(bankCard string) bool {
 }
 
 func IsIdCardNo(idCardNo string) bool {
+	/*
+	身份证校验码的计算方法：
+	1、将前面的身份证号码17位数分别乘以不同的系数，系数见：coefficient
+	2、将这17位数字和系数相乘的结果相加，用加出来和除以11，得到余数Remainder
+	3、余数Remainder作为位置值，在数组code中找到对应的值，就是身份证号码的第18位数值
+	 */
 	var (
-		coefficient []int = []int{7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2}
-		code        []byte  = []byte{'1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'}
+		coefficient = []int{7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2}
+		code        = []byte{'1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'}
 	)
 	if len(idCardNo) != 18 {
 		return false
