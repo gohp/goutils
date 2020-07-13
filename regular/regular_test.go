@@ -42,3 +42,11 @@ func TestIsBankNo(t *testing.T) {
 		So(IsBankNo("6222"), ShouldBeFalse)
 	})
 }
+
+func TestIsIdCardNo(t *testing.T) {
+	Convey("test id card no", t, func() {
+		So(IsIdCardNo("6222"), ShouldBeFalse)
+		So(IsIdCardNo("true id card no"), ShouldBeTrue)
+		So(IsIdCardNo("false id card no"), ShouldBeFalse)
+	})
+}

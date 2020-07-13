@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/wzyonggege/goutils/httplib"
 	"regexp"
+	"strings"
 )
 
 var (
@@ -48,17 +49,35 @@ func IsIpv4Addr(v string) bool {
 }
 
 // IsBankNo ... from alipay
-func IsBankNo(bankCard string) (b bool) {
+func IsBankNo(bankCard string) bool {
 	url := "https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?_input_charset=utf-8&cardNo=%s&cardBinCheck=true"
 	url = fmt.Sprintf(url, bankCard)
 	result := ValidateBankCard{}
 
 	err := httplib.Get(url).ToJson(&result)
 	if err != nil {
-		return
+		return false
 	}
 	if result.Validated == true && result.Bank != "" {
 		return true
 	}
-	return
+	return false
+}
+
+func IsIdCardNo(idCardNo string) bool {
+	var (
+		coefficient []int = []int{7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2}
+		code        []byte  = []byte{'1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'}
+	)
+	if len(idCardNo) != 18 {
+		return false
+	}
+
+	idByte := []byte(strings.ToUpper(idCardNo))
+
+	sum := 0
+	for i := 0; i < 17; i++ {
+		sum += int(idByte[i]-byte('0')) * coefficient[i]
+	}
+	return code[sum%11] == idByte[17]
 }
