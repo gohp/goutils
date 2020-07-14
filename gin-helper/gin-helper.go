@@ -5,7 +5,6 @@ import (
 	"net/http"
 )
 
-
 type ErrResponse struct {
 	Success bool   `json:"success"`
 	Code    int    `json:"error_code"`
@@ -34,18 +33,18 @@ func WriteError(c *gin.Context, errCode int, errMsg string) {
 	})
 }
 
-func PageNotFound(c *gin.Context)  {
+func PageNotFound(c *gin.Context) {
 	c.JSON(http.StatusNotFound, gin.H{
-		"status" : http.StatusNotFound,
-		"error": "page not found",
+		"status": http.StatusNotFound,
+		"error":  "page not found",
 	})
 	return
 }
 
-func MethodNotFound(c *gin.Context)  {
+func MethodNotFound(c *gin.Context) {
 	c.JSON(http.StatusMethodNotAllowed, gin.H{
-		"status" : http.StatusMethodNotAllowed,
-		"error": "method not allowed",
+		"status": http.StatusMethodNotAllowed,
+		"error":  "method not allowed",
 	})
 	return
 }

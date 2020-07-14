@@ -8,9 +8,9 @@ import (
 // 分页计算
 
 type Pagination struct {
-	Total int64
+	Total  int64
 	Offset int64
-	Limit int64
+	Limit  int64
 	Result interface{}
 }
 
