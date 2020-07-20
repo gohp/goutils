@@ -5,6 +5,17 @@ import (
 	"testing"
 )
 
+func TestIsUsername(t *testing.T) {
+	Convey("Test is username", t, func() {
+		So(IsUsername("aa"), ShouldBeFalse)
+		So(IsUsername("aabbc"), ShouldBeTrue)
+		So(IsUsername("Aabbc23"), ShouldBeTrue)
+		So(IsUsername("A-0abbc23"), ShouldBeFalse)
+		So(IsUsername("A1023abbc23jol76"), ShouldBeTrue)   //16
+		So(IsUsername("A1023abbc23jol76a"), ShouldBeFalse) //16
+	})
+}
+
 func TestIsEmail(t *testing.T) {
 	Convey("Test is email", t, func() {
 		So(IsEmail("1234@gmail.com"), ShouldBeTrue)
@@ -46,7 +57,7 @@ func TestIsBankNo(t *testing.T) {
 func TestIsIdCardNo(t *testing.T) {
 	Convey("test id card no", t, func() {
 		So(IsIdCardNo("6222"), ShouldBeFalse)
-		So(IsIdCardNo("true id card no"), ShouldBeTrue)
-		So(IsIdCardNo("false id card no"), ShouldBeFalse)
+		//So(IsIdCardNo("true id card no"), ShouldBeTrue)
+		//So(IsIdCardNo("false id card no"), ShouldBeFalse)
 	})
 }
