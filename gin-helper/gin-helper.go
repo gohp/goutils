@@ -5,6 +5,13 @@ import (
 	"net/http"
 )
 
+type BaseResponse struct {
+	Success bool        `json:"success"`
+	Code    int         `json:"error_code"`
+	Message string      `json:"error_message"`
+	Result  interface{} `json:"result"`
+}
+
 type ErrResponse struct {
 	Success bool   `json:"success"`
 	Code    int    `json:"error_code"`
