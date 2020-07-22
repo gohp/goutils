@@ -47,7 +47,8 @@ func (client *TcpClient) Run() {
 	for {
 		localClient, err := listener.AcceptTCP()
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
+			continue
 		}
 		go client.handleRequest(localClient, serverAddr)
 	}
@@ -77,22 +78,11 @@ func (client *TcpClient) handleRequest(localClient *net.TCPConn, serverAddr *net
 		return
 	}
 
-	/*
-		告诉客户端 不需要验证
-		+----+--------+
-		|VER | METHOD |
-		+----+--------+
-		| 1  |   1    |
-		+----+--------+
-	*/
 	localClient.Write([]byte{0x05, 0x00})
 	if n, err = io.ReadAtLeast(localClient, buf, 5); err != nil {
 		return
 	}
-	if buf[0] != 0x05 {
-		return
-	}
-	if buf[1] != 0x01 {
+	if buf[0] != 0x05 || buf[1] != 0x01 {
 		return
 	}
 
