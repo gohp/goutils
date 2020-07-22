@@ -48,7 +48,6 @@ func (server *TcpServer) Run() {
 }
 
 func (server *TcpServer) handleRequest(conn *net.TCPConn) {
-	log.Println("client recv ")
 	buf := make([]byte, 263)
 	n, _ := io.ReadAtLeast(conn, buf, 5)
 
@@ -69,12 +68,10 @@ func (server *TcpServer) handleRequest(conn *net.TCPConn) {
 	}
 	// port
 	dstPort := buf[n-2:]
-	dstAddr := &net.TCPAddr{
-		IP:   dstIP,
-		Port: int(binary.BigEndian.Uint16(dstPort)),
-	}
+	port := int(binary.BigEndian.Uint16(dstPort))
+	log.Printf("recv request %s:%d\n", string(dstIP), port)
 
-	client, _ := net.DialTCP("tcp", nil, dstAddr)
+	client, _ := net.DialTCP("tcp", nil, &net.TCPAddr{IP: dstIP, Port: port})
 
 	wg := new(sync.WaitGroup)
 	wg.Add(2)

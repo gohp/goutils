@@ -54,7 +54,7 @@ func (client *TcpClient) Run() {
 }
 
 func (client *TcpClient) handleRequest(localClient *net.TCPConn, serverAddr *net.TCPAddr) {
-	log.Println("client transfer to server")
+	log.Println("client -> server")
 
 	buf := make([]byte, 263)
 	n, err := io.ReadAtLeast(localClient, buf, 2)
