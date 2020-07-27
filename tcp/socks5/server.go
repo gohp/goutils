@@ -41,7 +41,8 @@ func (server *TcpServer) Run() {
 	for {
 		conn, err := listener.AcceptTCP()
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
+			continue
 		}
 		go server.handleRequest(conn)
 	}
@@ -78,11 +79,21 @@ func (server *TcpServer) handleRequest(conn *net.TCPConn) {
 
 	go func() {
 		defer wg.Done()
+		defer func() {
+			if err := recover();err != nil {
+				log.Println("panic recover",err)
+			}
+		}()
 		transfer(conn, client)
 	}()
 
 	go func() {
 		defer wg.Done()
+		defer func() {
+			if err := recover();err != nil {
+				log.Println("panic recover",err)
+			}
+		}()
 		transfer(client, conn)
 	}()
 
