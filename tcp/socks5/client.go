@@ -1,6 +1,7 @@
 package socks5
 
 import (
+	"errors"
 	"io"
 	"log"
 	"net"
@@ -54,49 +55,106 @@ func (client *TcpClient) Run() {
 	}
 }
 
-func (client *TcpClient) handleRequest(localClient *net.TCPConn, serverAddr *net.TCPAddr) {
-	log.Println("client -> server")
-
-	buf := make([]byte, 263)
-	n, err := io.ReadAtLeast(localClient, buf, 2)
+func (client *TcpClient) replay(conn net.Conn, data []byte) error {
+	_, err := conn.Write(data)
 	if err != nil {
-		return
+		log.Printf("replay bytes err: %v\n", err)
+	}
+	return err
+}
+
+func (client *TcpClient) replayAuth(conn net.Conn) error {
+	// not auth
+	// reply
+	//    +----+--------+
+	//    |VER | METHOD |
+	//    +----+--------+
+	//    | 1  |   1    |
+	//    +----+--------+
+	return client.replay(conn, []byte{0x05, 0x00})
+}
+
+func (client *TcpClient) replayConnect(conn net.Conn) error {
+	// not auth
+	return client.replay(conn, []byte{0x05, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00})
+}
+
+func (client *TcpClient) unpackAuth(conn net.Conn) error {
+	buf := make([]byte, 263)
+	n, err := io.ReadAtLeast(conn, buf, 2)
+	if err != nil {
+		return err
 	}
 
-	// only support socks5
+	// |VER | NMETHODS | METHODS  |
+	// +----+----------+----------+
+	// | 5  |    1     | 1 to 255 |
+	// +----+----------+----------+
 	if buf[0] != 0x05 {
-		return
+		return errors.New("only support socks5")
 	}
 
 	nMethod := int(buf[1])
 	msgLen := nMethod + 2
 	if n < msgLen {
-		if _, err = io.ReadFull(localClient, buf[n:msgLen]); err != nil {
-			return
+		if _, err = io.ReadFull(conn, buf[n:msgLen]); err != nil {
+			return err
 		}
 	} else if n > msgLen {
-		return
+		return errors.New("todo")
 	}
 
-	localClient.Write([]byte{0x05, 0x00})
-	if n, err = io.ReadAtLeast(localClient, buf, 5); err != nil {
-		return
+	return nil
+}
+
+func (client *TcpClient) unpackConnecting(conn net.Conn) ([]byte, int, error) {
+	// +----+-----+-------+------+----------+----------+
+	// |VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |
+	// +----+-----+-------+------+----------+----------+
+	// | 1  |  1  | X'00' |  1   | Variable |    2     |
+	// +----+-----+-------+------+----------+----------+
+	var min int
+	buf := make([]byte, 263)
+	min, err := io.ReadAtLeast(conn, buf, 5)
+	if err != nil {
+		return nil, min, err
 	}
 	if buf[0] != 0x05 || buf[1] != 0x01 {
+		return nil, min, errors.New("only support socks5")
+	}
+	return buf, min, nil
+}
+
+func (client *TcpClient) handleRequest(localClient *net.TCPConn, serverAddr *net.TCPAddr) {
+	defer localClient.Close()
+	log.Println("client -> server")
+
+	// 1. 认证阶段
+	// client -> server: 0x05 0x01 0x00
+	// server -> client: 0x05 0x00
+	if err := client.unpackAuth(localClient); err != nil {
+		log.Printf("unpackAuth error: %v\n", err)
+		return
+	}
+	client.replayAuth(localClient)
+
+	// 2. 连接阶段
+	buf, n, err := client.unpackConnecting(localClient)
+	if err != nil {
+		log.Printf("unpackConnecting error: %v\n", err)
 		return
 	}
 
+	// 3. 传输阶段
 	dstServer, err := net.DialTCP("tcp", nil, serverAddr)
 	if err != nil {
-		log.Print("remote addr error")
-		log.Print(err)
+		log.Printf("remote addr error: %v\n", err)
 		return
 	}
 	defer dstServer.Close()
-	defer localClient.Close()
 
 	dstServer.Write(buf[3:n])
-	localClient.Write([]byte{0x05, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00})
+	client.replayConnect(localClient)
 
 	wg := new(sync.WaitGroup)
 	wg.Add(2)
