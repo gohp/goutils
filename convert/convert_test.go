@@ -130,3 +130,14 @@ func TestAnyToString(t *testing.T) {
 		So(res, ShouldEqual, "false")
 	})
 }
+
+func TestFormatByteSize(t *testing.T) {
+	Convey("Test FormatByteSize", t, func() {
+		So(FormatByteSize(1), ShouldEqual, "1.00B")
+		So(FormatByteSize(1024), ShouldEqual, "1.00KB")
+		So(FormatByteSize(1024*1024), ShouldEqual, "1.00MB")
+		So(FormatByteSize(1024*1024*1024), ShouldEqual, "1.00GB")
+		So(FormatByteSize(1024*1024*1024*1024), ShouldEqual, "1.00TB")
+		So(FormatByteSize(1024*1024*1024*1024*1024), ShouldEqual, "1.00EB")
+	})
+}

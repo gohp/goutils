@@ -69,3 +69,34 @@ func AnyToString(value interface{}) (d string, err error) {
 	}
 	return
 }
+
+// FormatByteSize 格式化字节大小单位显示
+// 1 << 10: 1024
+// 1 << 20: 1024 * 1024
+// 1 << 30: 1024 * 1024 * 1024
+// ...
+func FormatByteSize(size int64) string {
+	suffix := ""
+	var b float64
+	if size < (1 << 10) {
+		suffix = "B"
+		b = float64(size)
+	} else if size < (1 << 20) {
+		suffix = "KB"
+		b = float64(size) / (1 << 10)
+	} else if size < (1 << 30) {
+		suffix = "MB"
+		b = float64(size) / (1 << 20)
+	} else if size < (1 << 40) {
+		suffix = "GB"
+		b = float64(size) / float64(1<<30)
+	} else if size < (1 << 50) {
+		suffix = "TB"
+		b = float64(size) / float64(1<<40)
+	} else if size < (1 << 60) {
+		suffix = "EB"
+		b = float64(size) / float64(1<<50)
+	}
+
+	return fmt.Sprintf("%.2f%s", b, suffix)
+}
