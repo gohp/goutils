@@ -13,18 +13,24 @@ import (
 * @Date: 2020/7/21
  */
 
-type TcpServer struct {
+const (
+	addrDomain = 0x03
+	addrIpv4   = 0x01
+	addrIpv6   = 0x04
+)
+
+type ProxyServer struct {
 	listenAddr string
 }
 
-func NewServer(addr string) *TcpServer {
-	s := &TcpServer{
+func NewServer(addr string) *ProxyServer {
+	s := &ProxyServer{
 		listenAddr: addr,
 	}
 	return s
 }
 
-func (server *TcpServer) Run() {
+func (server *ProxyServer) Run() {
 	// listen client
 	listenAddr, err := net.ResolveTCPAddr("tcp", server.listenAddr)
 	if err != nil {
@@ -48,21 +54,21 @@ func (server *TcpServer) Run() {
 	}
 }
 
-func (server *TcpServer) handleRequest(conn *net.TCPConn) {
+func (server *ProxyServer) handleRequest(conn *net.TCPConn) {
 	buf := make([]byte, 263)
 	n, _ := io.ReadAtLeast(conn, buf, 5)
 
 	var dstIP []byte
 	switch buf[0] {
-	case 0x01: // ipv4
+	case addrIpv4: // ipv4
 		dstIP = buf[1 : net.IPv4len+1]
-	case 0x03: // domain
+	case addrDomain: // domain
 		ipAddr, err := net.ResolveIPAddr("ip", string(buf[2:n-2]))
 		if err != nil {
 			return
 		}
 		dstIP = ipAddr.IP
-	case 0x04: // ipv6
+	case addrIpv6: // ipv6
 		dstIP = buf[1 : net.IPv6len+1]
 	default:
 		return
@@ -80,8 +86,8 @@ func (server *TcpServer) handleRequest(conn *net.TCPConn) {
 	go func() {
 		defer wg.Done()
 		defer func() {
-			if err := recover();err != nil {
-				log.Println("panic recover",err)
+			if err := recover(); err != nil {
+				log.Println("panic recover", err)
 			}
 		}()
 		transfer(conn, client)
@@ -90,8 +96,8 @@ func (server *TcpServer) handleRequest(conn *net.TCPConn) {
 	go func() {
 		defer wg.Done()
 		defer func() {
-			if err := recover();err != nil {
-				log.Println("panic recover",err)
+			if err := recover(); err != nil {
+				log.Println("panic recover", err)
 			}
 		}()
 		transfer(client, conn)

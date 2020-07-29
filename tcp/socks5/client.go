@@ -13,20 +13,20 @@ import (
 * @Date: 2020/7/21
  */
 
-type TcpClient struct {
+type ProxyClient struct {
 	listenAddr string
 	serverAddr string
 }
 
-func NewClient(listenAddr string, serverAddr string) *TcpClient {
-	c := &TcpClient{
+func NewClient(listenAddr string, serverAddr string) *ProxyClient {
+	c := &ProxyClient{
 		listenAddr: listenAddr,
 		serverAddr: serverAddr,
 	}
 	return c
 }
 
-func (client *TcpClient) Run() {
+func (client *ProxyClient) Run() {
 	// proxy地址
 	serverAddr, err := net.ResolveTCPAddr("tcp", client.serverAddr)
 	if err != nil {
@@ -55,7 +55,7 @@ func (client *TcpClient) Run() {
 	}
 }
 
-func (client *TcpClient) replay(conn net.Conn, data []byte) error {
+func (client *ProxyClient) replay(conn net.Conn, data []byte) error {
 	_, err := conn.Write(data)
 	if err != nil {
 		log.Printf("replay bytes err: %v\n", err)
@@ -63,7 +63,7 @@ func (client *TcpClient) replay(conn net.Conn, data []byte) error {
 	return err
 }
 
-func (client *TcpClient) replayAuth(conn net.Conn) error {
+func (client *ProxyClient) replayAuth(conn net.Conn) error {
 	// not auth
 	// reply
 	//    +----+--------+
@@ -74,12 +74,12 @@ func (client *TcpClient) replayAuth(conn net.Conn) error {
 	return client.replay(conn, []byte{0x05, 0x00})
 }
 
-func (client *TcpClient) replayConnect(conn net.Conn) error {
+func (client *ProxyClient) replayConnect(conn net.Conn) error {
 	// not auth
 	return client.replay(conn, []byte{0x05, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00})
 }
 
-func (client *TcpClient) unpackAuth(conn net.Conn) error {
+func (client *ProxyClient) unpackAuth(conn net.Conn) error {
 	buf := make([]byte, 263)
 	n, err := io.ReadAtLeast(conn, buf, 2)
 	if err != nil {
@@ -107,7 +107,7 @@ func (client *TcpClient) unpackAuth(conn net.Conn) error {
 	return nil
 }
 
-func (client *TcpClient) unpackConnecting(conn net.Conn) ([]byte, int, error) {
+func (client *ProxyClient) unpackConnecting(conn net.Conn) ([]byte, int, error) {
 	// +----+-----+-------+------+----------+----------+
 	// |VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |
 	// +----+-----+-------+------+----------+----------+
@@ -125,7 +125,7 @@ func (client *TcpClient) unpackConnecting(conn net.Conn) ([]byte, int, error) {
 	return buf, min, nil
 }
 
-func (client *TcpClient) handleRequest(localClient *net.TCPConn, serverAddr *net.TCPAddr) {
+func (client *ProxyClient) handleRequest(localClient *net.TCPConn, serverAddr *net.TCPAddr) {
 	defer localClient.Close()
 	log.Println("client -> server")
 
@@ -154,7 +154,7 @@ func (client *TcpClient) handleRequest(localClient *net.TCPConn, serverAddr *net
 	defer dstServer.Close()
 
 	dstServer.Write(buf[3:n])
-	client.replayConnect(localClient)
+	_ = client.replayConnect(localClient)
 
 	wg := new(sync.WaitGroup)
 	wg.Add(2)
