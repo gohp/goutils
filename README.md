@@ -29,6 +29,7 @@ Common, utility packages for Go
 | 行政区域查询 | [area](area/README.md) | 根据行政编码，区号，名称等查询行政区域信息 |
 | websocket | [websocket](ws/README.md) | 基于gorilla/websocket的服务端，客户端 |
 | 缓存 | [cache](cache/README.md) | 两级缓存 |
+| 字符串操作 | [str](str/README.md) | 两级缓存 |
 
 ## Usage
 
