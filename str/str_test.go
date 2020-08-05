@@ -10,7 +10,7 @@ import (
 * @Date: 2020/8/4
  */
 
-func Test(t *testing.T) {
+func TestLongestPalindromic(t *testing.T) {
 	Convey("Test ", t, func() {
 		So(LongestPalindromic("babad"), ShouldEqual, "bab")
 		So(LongestPalindromic("cbbd"), ShouldEqual, "bb")

@@ -19,7 +19,7 @@ Example 2:
 
 Input: "cbbd"
 Output: "bb"
- */
+*/
 func LongestPalindromic(input string) string {
 	if len(input) < 2 {
 		return input
