@@ -36,5 +36,5 @@ Common, utility packages for Go
 install 
 
 ```shell script
-go get -u github.com/wzyonggege/goutils
+go get -u github.com/goph/goutils
 ```
