@@ -19,7 +19,7 @@
 ```shell script
 goos: darwin
 goarch: amd64
-pkg: github.com/wzyonggege/goutils/sort
+pkg: github.com/gohp/goutils/sort
 BenchmarkBubbleSort-8           26037326                44.3 ns/op
 BenchmarkSelectSort-8           19312984                60.1 ns/op
 BenchmarkInsertSort-8           39722790                28.2 ns/op

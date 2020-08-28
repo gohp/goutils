@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/wzyonggege/goutils/choke"
-	"github.com/wzyonggege/goutils/tcp/socks5"
+	"github.com/gohp/goutils/choke"
+	"github.com/gohp/goutils/tcp/socks5"
 )
 
 /**

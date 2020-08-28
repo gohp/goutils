@@ -2,7 +2,7 @@ package regular
 
 import (
 	"fmt"
-	"github.com/wzyonggege/goutils/httplib"
+	"github.com/gohp/goutils/httplib"
 	"regexp"
 	"strings"
 )

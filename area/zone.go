@@ -2,7 +2,7 @@ package area
 
 import (
 	"encoding/json"
-	"github.com/wzyonggege/goutils/file"
+	"github.com/gohp/goutils/file"
 	"strings"
 )
 

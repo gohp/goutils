@@ -2,7 +2,7 @@ package curip
 
 import (
 	. "github.com/smartystreets/goconvey/convey"
-	"github.com/wzyonggege/goutils/regular"
+	"github.com/gohp/goutils/regular"
 	"testing"
 )
 
