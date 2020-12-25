@@ -1,6 +1,10 @@
 # Color
 
 ```go
+import (
+    "github.com/gohp/goutils/color"
+)
+
 func main() {
 	color.Black.Println("Black")
 	color.Red.Println("Red")
@@ -28,3 +32,5 @@ func main() {
 	color.Black.RedBg().Hidden().Println("Hidden")
 }
 ```
+
+![color](./img/color.jpg)

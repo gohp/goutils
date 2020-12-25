@@ -9,8 +9,8 @@ error code 封装业务错误码
 
 ```go
 import (
-	"github.com/wzyonggege/goutils/ecode"
-	"github.com/wzyonggege/goutils/http"
+	"github.com/gohp/goutils/ecode"
+	"github.com/gohp/goutils/http"
 	"log"
 )
 

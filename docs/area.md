@@ -11,9 +11,10 @@
 
 ```go
 package main
+
 import (
     "fmt"
-    "github.com/wzyonggege/goutils/area"
+    "github.com/gohp/goutils/area"
 )
 
 func main() {
