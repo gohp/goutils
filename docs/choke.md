@@ -15,4 +15,5 @@ import (
 func main() {
 	// ...
 	choke.Choke()
+}
 ```
