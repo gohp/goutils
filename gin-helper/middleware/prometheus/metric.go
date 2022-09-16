@@ -36,7 +36,7 @@ func init() {
 	)
 }
 
-// Metric metric middleware
+// Metric middleware
 func Metric() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tBegin := time.Now()

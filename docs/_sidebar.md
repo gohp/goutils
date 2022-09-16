@@ -24,3 +24,6 @@
 * [websocket](websocket.md)
 * [缓存](cache.md)
 * [字符串操作](str.md)
+* [压缩](compress.md)
+* [leakybuf](leakybuf.md)
+* [gbk](gbk.md)
