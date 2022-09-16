@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
-	helper "github.com/wzyonggege/goutils/gin-helper"
+	helper "github.com/gohp/goutils/gin-helper"
 	"io/ioutil"
 	"net/url"
 	"strings"
@@ -24,7 +24,7 @@ type Config struct {
 	ErrMsg  string
 }
 
-// Verify is is the verify model.
+// Verify is to verify model.
 type Verify struct {
 	lock    sync.RWMutex
 	keys    map[string]string
