@@ -2,7 +2,7 @@ package jwt
 
 import (
 	"errors"
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v4"
 	"time"
 )
 
@@ -13,13 +13,14 @@ const (
 
 type Config struct {
 	Key        string
-	ExpireHour time.Duration
+	ExpireTime time.Duration
+	Issuer     string
 }
 
 type CustomClaims struct {
 	ID      interface{} // token unique id
 	LoginAt int64       // login timestamp
-	jwt.StandardClaims
+	jwt.RegisteredClaims
 }
 
 type Service struct {
@@ -31,19 +32,19 @@ func New(c *Config) *Service {
 	if c == nil {
 		c = &Config{
 			Key:        defaultKey,
-			ExpireHour: fifteenDayHours,
+			ExpireTime: time.Hour * fifteenDayHours,
 		}
 	}
 	s := &Service{
 		C: c,
 	}
-	if c.ExpireHour == 0 {
-		s.C.ExpireHour = fifteenDayHours
+	if c.ExpireTime == 0 {
+		s.C.ExpireTime = time.Hour * fifteenDayHours
 	}
 	return s
 }
 
-// Decode a token string into a token object
+// DecodeToken a token string into a token object
 func (s *Service) DecodeToken(tokenString string) (*CustomClaims, error) {
 	// Parse the token
 	token, err := jwt.ParseWithClaims(tokenString, &CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
@@ -60,18 +61,15 @@ func (s *Service) DecodeToken(tokenString string) (*CustomClaims, error) {
 	}
 }
 
-// Encode a claim into a JWT
+// EncodeToken a claim into a JWT
 func (s *Service) EncodeToken(Id interface{}, loginAt time.Time) (string, error) {
-
-	expireToken := time.Now().Add(time.Hour * s.C.ExpireHour).Unix()
-
 	// Create the Claims
 	claims := CustomClaims{
 		Id,
 		loginAt.Unix(),
-		jwt.StandardClaims{
-			ExpiresAt: expireToken,
-			Issuer:    "mask.srv.user",
+		jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(s.C.ExpireTime)),
+			Issuer:    s.C.Issuer,
 		},
 	}
 
